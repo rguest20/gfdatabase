@@ -1,4 +1,11 @@
 <?php
+// Create connection
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "gfdatabase";
+$conn = new mysqli($servername, $username, $password, $dbname);
+mysqli_close($conn);
 
 ?>
 <!DOCTYPE html>
@@ -32,13 +39,20 @@
   </div>
     <div class="forms jumbotron">
       <h3>Picture Search</h3>
-      <form class="picturesearch" action="index.html" method="post">
-        <input type=text class="query"> <br />
+      <form class="picturesearch" action="search.php" method="post">
+        <input type=text class="query" name="value"> <br />
+        <h5>Type of Search</h5>
+        <select name="querytype">
+          <option value="name">Name</option>
+          <option value="scene">Scene Number</option>
+          <option value="databasenumber">Database Number</option>
+          <option value="gfdatabase">Database for Genuine Fakes</option>
+        </select><br>
         <button>Search For a Picture</button>
       </form>
       <h3>New Picture Upload</h3>
-      <form class="pictureuploadform" action="index.html" method="post">
-        <input type=file class="pictureupload"></input><br />
+      <form class="pictureuploadform" action="upload.php" method="post" enctype="multipart/form-data">
+        <input type="file" class="pictureupload" name="file_to_upload" id= "file_to_upload"></input><br />
         <button>Import a New Picture</button>
       </form>
     </div>
