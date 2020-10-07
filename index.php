@@ -13,6 +13,7 @@ mysqli_close($conn);
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Genuine Fakes Database</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
@@ -32,7 +33,7 @@ mysqli_close($conn);
   </div>
 </div>
   <div class="nav">
-    <img src = "image001.jpg" alt="Error"></img>
+    <img src = "image001.png" alt="Error"></img>
   </div>
   <div class="title">
     <h1 class="maintitle">Picture Database<h1>
@@ -42,12 +43,10 @@ mysqli_close($conn);
       <form class="picturesearch" action="search.php" method="post">
         <input type=text class="query" name="value"> <br />
         <h5>Type of Search</h5>
-        <select name="querytype">
-          <option value="name">Name</option>
-          <option value="scene">Scene Number</option>
-          <option value="databasenumber">Database Number</option>
-          <option value="gfdatabase">Database for Genuine Fakes</option>
-        </select><br>
+          <input type = 'radio' name="querytype" value="name" checked>Name</input><br>
+          <input type = 'radio' name="querytype" value="scene">Scene Number</input><br>
+          <input type = 'radio' name="querytype" value="databasenumber">Database Number</input><br>
+          <input type = 'radio' name="querytype" value="gfdatabase">Database for Genuine Fakes</input><br>
         <button>Search For a Picture</button>
       </form>
       <h3>New Picture Upload</h3>
@@ -56,7 +55,7 @@ mysqli_close($conn);
         <button>Import a New Picture</button>
       </form>
     </div>
-  <div class="footer">
+  <div class="footer2">
     <p>Made by Ryan Guest 2020</p>
   </div>
 </body>

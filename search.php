@@ -1,18 +1,24 @@
 <?php
+$type = "";
+$value = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $type = $_POST["querytype"];
+    if (isset($_POST["querytype"])) {
+        $type = $_POST["querytype"];
+    }
     $value = $_POST["value"];
-}
-if ($type == "name") {
-    $type = "picture_name";
-} elseif ($type == "databasenumber") {
+};
+if ($type == "databasenumber") {
     $type = "database_index";
+    $sql= ("SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'");
 } elseif ($type == "gfdatabase") {
     $type = "gf_index";
+    $sql= ("SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'");
 } elseif ($type == "scene") {
     $type = "scene";
+    $sql= ("SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'");
 } else {
-    $type = "picture_file_name";
+    $type = "picture_name";
+    $sql= ("SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . "%'");
 };
 // Create connection and collect search data
 $servername = "localhost";
@@ -20,7 +26,6 @@ $username = "root";
 $password = "root";
 $dbname = "gfdatabase";
 $conn = new mysqli($servername, $username, $password, $dbname);
-$sql= ("SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . "%'");
 $search = mysqli_query($conn, $sql);
 $results = $search -> fetch_all(MYSQLI_ASSOC);
 mysqli_close($conn);
@@ -30,6 +35,7 @@ mysqli_close($conn);
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Genuine Fakes Database - Search</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
@@ -49,7 +55,7 @@ mysqli_close($conn);
   </div>
 </div>
   <div class="nav">
-    <img src = "image001.jpg" alt="Error"></img>
+    <img src = "image001.png" alt="Error"></img>
   </div>
   <div class="title">
     <h1 class="maintitle">Picture Database<h1>
@@ -59,25 +65,25 @@ mysqli_close($conn);
       <form class="picturesearch" action="search.php" method="post">
         <input type=text class="query" name="value"> <br />
         <h5>Type of Search</h5>
-        <select name="querytype">
-          <option value="name">Name</option>
-          <option value="scene">Scene Number</option>
-          <option value="databasenumber">Database Number</option>
-          <option value="gfdatabase">Database for Genuine Fakes</option>
-        </select><br>
+          <input type = 'radio' name="querytype" value="name" checked>Name</input><br>
+          <input type = 'radio' name="querytype" value="scene">Scene Number</input><br>
+          <input type = 'radio' name="querytype" value="databasenumber">Database Number</input><br>
+          <input type = 'radio' name="querytype" value="gfdatabase">Database for Genuine Fakes</input><br>
         <button>Search For a Picture</button>
       </form>
+      <a href = "index.php">Back to Home</a>
     </div>
     <h3>Results</h3>
     <img src = ""
     <?php
     foreach ($results as $x=>$y) {
-        echo '<p>Name = '. $y["picture_name"].'</p>';
-        echo '<p>Scene= '. $y["scene"].'</p>';
+        echo "<hr>";
+        echo '<p>Name: '. $y["picture_name"].'</p>';
+        echo '<p>Scene: '. $y["scene"].'</p>';
         echo '<img src = "./uploads/'. $y["picture_file_name"] . '" height = "200" width = "200">';
     }
     ?>
-  <div class="footer">
+  <div class="footer2">
     <p>Made by Ryan Guest 2020</p>
   </div>
 </body>

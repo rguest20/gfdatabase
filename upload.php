@@ -17,6 +17,7 @@ mysqli_close($conn);
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Genuine Fakes Database</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
@@ -36,7 +37,7 @@ mysqli_close($conn);
   </div>
 </div>
   <div class="nav">
-    <img src = "image001.jpg" alt="Error"></img>
+    <img src = "image001.png" alt="Error"></img>
   </div>
   <div class="title">
     <h1 class="maintitle">Picture Database<h1>
@@ -102,7 +103,7 @@ mysqli_close($conn);
         <input type="submit" value="Cancel Upload">
       </form>
     </div>
-  <div class="footer">
+  <div class="footer2">
     <p>Made by Ryan Guest 2020</p>
   </div>
 </body>
