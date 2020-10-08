@@ -5,10 +5,10 @@ $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
 // Create connection
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "gfdatabase";
+$servername = "127.0.0.1:3306";
+$username = "u697980380_genuinefakes";
+$password = "JohnMyatt1";
+$dbname = "u697980380_gfdatabase";
 $conn = new mysqli($servername, $username, $password, $dbname);
 mysqli_close($conn);
 ?>
