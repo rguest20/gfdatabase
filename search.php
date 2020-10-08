@@ -42,7 +42,7 @@ $search = mysqli_query($conn, $sqlcount);
 
 $query_data = mysqli_fetch_row($search);
 $numrows = $query_data[0];
-$rows_per_page = 15;
+$rows_per_page = 10;
 $lastpage      = ceil($numrows/$rows_per_page);
 $pageno = (int)$pageno;
 if ($pageno > $lastpage) {
@@ -133,19 +133,19 @@ mysqli_close($conn);
     }
     echo "<div class = 'pagination'>";
     if ($pageno == 1) {
-        echo " FIRST PREV ";
+        echo " FIRST < ";
     } else {
-        echo " <a href='{$_SERVER['PHP_SELF']}?pageno=1'>FIRST</a> ";
+        echo " <strong><a href='{$_SERVER['PHP_SELF']}?pageno=1'>FIRST</a></strong> ";
         $prevpage = $pageno-1;
-        echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$prevpage'>PREV</a> ";
+        echo " <strong><a href='{$_SERVER['PHP_SELF']}?pageno=$prevpage'><</a></strong> ";
     }
     echo " ( Page $pageno of $lastpage ) ";
     if ($pageno == $lastpage) {
-        echo " NEXT LAST ";
+        echo " > LAST ";
     } else {
         $nextpage = $pageno+1;
-        echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$nextpage'>NEXT</a> ";
-        echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$lastpage'>LAST</a> ";
+        echo " <strong><a href='{$_SERVER['PHP_SELF']}?pageno=$nextpage'>></a></strong> ";
+        echo " <strong><a href='{$_SERVER['PHP_SELF']}?pageno=$lastpage'>LAST</a></strong> ";
     }
     echo "</div>";
     ?>
