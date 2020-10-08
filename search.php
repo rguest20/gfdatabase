@@ -24,7 +24,7 @@ if ($type == "databasenumber") {
 } elseif ($type == "scene") {
     $type = "scene";
     $sqlcount= "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . ".%'";
-    $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . ".%'";
+    $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '% " . $value . ".%' OR `" . $type . "` LIKE '" . $value . ".%'";
 } else {
     $type = "picture_name";
     $sqlcount = "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . "%'";
