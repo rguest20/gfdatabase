@@ -1,11 +1,22 @@
 body{
-  min-width: 650px;
+  min-width: 700px;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: black;
+  text-decoration:none;
+  cursor:pointer;
 }
 
 #carouselbackdrop{
   opacity: 0.1;
   position: fixed;
-  width: 100vw; 
+  width: 100vw;
   min-width: 1300px;
   z-index: -1
 }
@@ -28,6 +39,7 @@ body{
 }
 
 .title{
+  text-decoration: none;
   display: block;
   margin: auto;
   text-align: center;
@@ -48,6 +60,7 @@ body{
 
 .jumbotron{
   background-color: rgba(122, 122, 122, 0.2);
+  padding-bottom: 2rem;
 }
 
 .forms > h3{
@@ -71,7 +84,35 @@ body{
 
 .pictureupload{
   padding-bottom: 1rem;
+}
 
+.cancelupload{
+  padding-top: 0.5rem;
+}
+
+.searchresult{
+  display: block;
+}
+
+.indexofsearch{
+  float: right;
+}
+
+.pictureinformation{
+  display: inline-block;
+  margin-left: 1rem;
+  width: 50%
+}
+
+.searchimage{
+  display: inline-block;
+}
+
+.pagination{
+  display: block;
+  margin: auto;
+  padding-top: 2rem;
+  text-align: center;
 }
 
 .footer{

@@ -36,20 +36,23 @@ mysqli_close($conn);
     <img src = "image001.png" alt="Error"></img>
   </div>
   <div class="title">
-    <h1 class="maintitle">Picture Database<h1>
+    <h1 class="maintitle"><a href = "index.php">Picture Database</a></h1>
   </div>
     <br>
     <div class="forms jumbotron">
       <h3>Picture Search</h3>
       <form class="picturesearch" action="search.php" method="post">
-        <input type=text class="query" name="value"> <br />
+        <input type=text class="query" name="value" autocomplete="off"> <br />
         <h5>Type of Search</h5>
           <input type = 'radio' name="querytype" value="name" checked>Name</input><br>
           <input type = 'radio' name="querytype" value="scene">Scene Number</input><br>
           <input type = 'radio' name="querytype" value="databasenumber">Database Number</input><br>
-          <input type = 'radio' name="querytype" value="gfdatabase">Database for Genuine Fakes</input><br>
+          <input type = 'radio' name="querytype" value="gfdatabase">Index</input><br>
         <button>Search For a Picture</button>
       </form>
+    </div>
+    <br>
+    <div class = "forms jumbotron">
       <h3>New Picture Upload</h3>
       <form class="pictureuploadform" action="upload.php" method="post" enctype="multipart/form-data">
         <input type="file" class="pictureupload" name="file_to_upload" id= "file_to_upload"></input><br />

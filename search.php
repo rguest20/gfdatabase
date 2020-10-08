@@ -1,4 +1,10 @@
 <?php
+if (isset($_GET['pageno'])) {
+    $pageno = $_GET['pageno'];
+} else {
+    $pageno = 1;
+};
+
 $type = "";
 $value = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -9,25 +15,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 };
 if ($type == "databasenumber") {
     $type = "database_index";
-    $sql= ("SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'");
+    $sqlcount = "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
+    $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
 } elseif ($type == "gfdatabase") {
     $type = "gf_index";
-    $sql= ("SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'");
+    $sqlcount = "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
+    $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
 } elseif ($type == "scene") {
     $type = "scene";
-    $sql= ("SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'");
+    $sqlcount= "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . ".%'";
+    $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . ".%'";
 } else {
     $type = "picture_name";
-    $sql= ("SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . "%'");
+    $sqlcount = "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . "%'";
+    $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . "%'";
 };
+
+
 // Create connection and collect search data
 $servername = "localhost";
 $username = "root";
 $password = "root";
 $dbname = "gfdatabase";
 $conn = new mysqli($servername, $username, $password, $dbname);
-$search = mysqli_query($conn, $sql);
-$results = $search -> fetch_all(MYSQLI_ASSOC);
+$search = mysqli_query($conn, $sqlcount);
+
+$query_data = mysqli_fetch_row($search);
+$numrows = $query_data[0];
+$rows_per_page = 15;
+$lastpage      = ceil($numrows/$rows_per_page);
+$pageno = (int)$pageno;
+if ($pageno > $lastpage) {
+    $pageno = $lastpage;
+};
+if ($pageno < 1) {
+    $pageno = 1;
+};
+$limit = 'LIMIT ' .($pageno - 1) * $rows_per_page .',' .$rows_per_page;
+
+$actualsql = $sql . $limit;
+$result = mysqli_query($conn, $actualsql);
+$results = $result -> fetch_all(MYSQLI_ASSOC);
 mysqli_close($conn);
 ?>
 <!DOCTYPE html>
@@ -59,18 +87,26 @@ mysqli_close($conn);
     <img src="image001.png" alt="Error"></img>
   </div>
   <div class="title">
-    <h1 class="maintitle">Picture Database<h1>
+    <h1 class="maintitle"><a href = "index.php">Picture Database</a></h1>
   </div>
   <br>
   <div class="forms jumbotron">
     <h3>Picture Search</h3>
     <form class="picturesearch" action="search.php" method="post">
-      <input type=text class="query" name="value"> <br />
+      <input type=text class="query" name="value" autocomplete="off" autofocus> <br />
       <h5>Type of Search</h5>
-      <input type='radio' name="querytype" value="name" checked>Name</input><br>
-      <input type='radio' name="querytype" value="scene">Scene Number</input><br>
-      <input type='radio' name="querytype" value="databasenumber">Database Number</input><br>
-      <input type='radio' name="querytype" value="gfdatabase">Database for Genuine Fakes</input><br>
+      <input type='radio' name="querytype" value="name" <?php if ($type == "picture_name") {
+    echo "checked";
+} ?>>Name</input><br>
+      <input type='radio' name="querytype" value="scene" <?php if ($type == "scene") {
+    echo "checked";
+} ?>>Scene Number</input><br>
+      <input type='radio' name="querytype" value="databasenumber" <?php if ($type == "database_index") {
+    echo "checked";
+} ?>>Database Number</input><br>
+      <input type='radio' name="querytype" value="gfdatabase" <?php if ($type == "gf_index") {
+    echo "checked";
+} ?>>Index</input><br>
       <button>Search For a Picture</button>
     </form>
     <a href="index.php">Back to Home</a>
@@ -80,11 +116,38 @@ mysqli_close($conn);
     <h3>Results</h3>
     <?php
     foreach ($results as $x=>$y) {
+        echo "<div class = 'searchresult'>";
         echo "<hr>";
+        echo "<div class = 'indexofsearch'>";
+        echo '<p>Index: '. $y["gf_index"] . '</p>';
+        echo "</div>";
+        echo '<img src = "./uploads/'. $y["picture_file_name"] . '" height = "200" width = "200" class="searchimage">';
+        echo "<div class = 'pictureinformation'>";
         echo '<p>Name: '. $y["picture_name"].'</p>';
-        echo '<p>Scene: '. $y["scene"].'</p>';
-        echo '<img src = "./uploads/'. $y["picture_file_name"] . '" height = "200" width = "200">';
+        $scene = str_replace(".", ",", $y['scene']);
+        $scenetrimmed = rtrim($scene, ", ");
+        echo '<p>Scene: '. $scenetrimmed .'</p>';
+        echo '<p>Database number: '. $y["database_index"] .'</p>';
+        echo "</div>";
+        echo "</div>";
     }
+    echo "<div class = 'pagination'>";
+    if ($pageno == 1) {
+        echo " FIRST PREV ";
+    } else {
+        echo " <a href='{$_SERVER['PHP_SELF']}?pageno=1'>FIRST</a> ";
+        $prevpage = $pageno-1;
+        echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$prevpage'>PREV</a> ";
+    }
+    echo " ( Page $pageno of $lastpage ) ";
+    if ($pageno == $lastpage) {
+        echo " NEXT LAST ";
+    } else {
+        $nextpage = $pageno+1;
+        echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$nextpage'>NEXT</a> ";
+        echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$lastpage'>LAST</a> ";
+    }
+    echo "</div>";
     ?>
   </div>
   <div class="footer2">
