@@ -42,6 +42,7 @@ mysqli_close($conn);
   <div class="title">
     <h1 class="maintitle">Picture Database<h1>
   </div>
+    <br>
     <div class="forms jumbotron">
       <h3>More information</h3>
       <h5>Upload Status</h5>

@@ -38,6 +38,7 @@ mysqli_close($conn);
   <div class="title">
     <h1 class="maintitle">Picture Database<h1>
   </div>
+    <br>
     <div class="forms jumbotron">
       <h3>Picture Search</h3>
       <form class="picturesearch" action="search.php" method="post">

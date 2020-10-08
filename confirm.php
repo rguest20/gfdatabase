@@ -57,6 +57,7 @@ mysqli_close($conn);
   <div class="title">
     <h1 class="maintitle">Picture Database<h1>
   </div>
+    <br>
     <div class="forms jumbotron">
       <h3>Database Updated</h3>
       <p> Your picture has been uploaded and information updated in the database.  You will be redirected to the homepage in 5 seconds or click <a href="index.php">here</a> to go back now.
