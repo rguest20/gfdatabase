@@ -21,6 +21,9 @@ foreach ($indexcheck as $x => $y) {
         $highestindex = $y['gf_index'];
     };
 };
+if (strpos($scene, '.') == false) {
+    $scene = $scene . '.';
+}
 $highestindex += 1;
 $sql= "INSERT INTO `genuine_fakes_pictues` (`gf_index`, `picture_file_name`, `database_index`, `picture_name`, `scene`) VALUES ('". $highestindex ."', '" . $fileaddress . "', '" . $database . "', '" . $name . "', '". $scene ."')";
 $upload = mysqli_query($conn, $sql);
@@ -55,12 +58,12 @@ mysqli_close($conn);
     <img src = "image001.png" alt="Error"></img>
   </div>
   <div class="title">
-    <h1 class="maintitle">Picture Database<h1>
+    <h1 class="maintitle"><a href = "index.php">Picture Database</a></h1>
   </div>
     <br>
     <div class="forms jumbotron">
       <h3>Database Updated</h3>
-      <p> Your picture has been uploaded and information updated in the database.  You will be redirected to the homepage in 5 seconds or click <a href="index.php">here</a> to go back now.
+      <p> Your picture has been uploaded and information updated in the database.  You will be redirected to the homepage in 5 seconds or click <strong><a href="index.php">here</a></strong> to go back now.
     </div>
   <div class="footer2">
     <p>Made by Ryan Guest 2020</p>
