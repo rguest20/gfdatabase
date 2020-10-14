@@ -1,8 +1,7 @@
 <?php
-$target_dir = "uploads/";
-$target_file = $target_dir . basename($_FILES["file_to_upload"]["name"]);
-$uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $ind = $_POST["file"];
+}
 
 // Create connection
 $servername = "localhost";
@@ -10,6 +9,14 @@ $username = "root";
 $password = "root";
 $dbname = "gfdatabase";
 $conn = new mysqli($servername, $username, $password, $dbname);
+$sql = "SELECT * FROM `genuine_fakes_pictues` WHERE `gf_index` = ". $ind ."";
+$search = mysqli_query($conn, $sql);
+$results = $search -> fetch_all(MYSQLI_ASSOC);
+$filename = $results[0]['picture_file_name'];
+$picture_name = $results[0]['picture_name'];
+$catalog_number = $results[0]['database_index'];
+$scene = $results[0]['scene'];
+
 mysqli_close($conn);
 ?>
 <!DOCTYPE html>
@@ -45,66 +52,29 @@ mysqli_close($conn);
   </div>
   <br>
   <div class="forms jumbotron">
-    <h3>More information</h3>
-    <h5>Upload Status</h5>
+    <h3>Edit Information</h3>
+    <h5>Image</h5>
     <?php
-      // Check if image file is a actual image or fake image
-      if (isset($_POST["submit"])) {
-          $check = getimagesize($_FILES["file_to_upload"]["tmp_name"]);
-          if ($check !== false) {
-              echo "File is an image - " . $check["mime"] . ".";
-              $uploadOk = 1;
-          } else {
-              echo "File is not an image.";
-              $uploadOk = 0;
-          }
-      }
-
-      // Check if file already exists
-      if (file_exists($target_file)) {
-          echo "Sorry, file already exists. <br>";
-          $uploadOk = 0;
-      }
-
-      // Allow certain file formats
-      if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-      && $imageFileType != "gif") {
-          echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-          $uploadOk = 0;
-      }
-      // Check if $uploadOk is set to 0 by an error
-      if ($uploadOk == 0) {
-          echo "Sorry, your file was not uploaded. This is the file we will be working on: <br>";
-          $filename = $_FILES["file_to_upload"]["name"];
-      // if everything is ok, try to upload file
-      } else {
-          if (move_uploaded_file($_FILES["file_to_upload"]["tmp_name"], $target_file)) {
-              echo "The file ". htmlspecialchars(basename($_FILES["file_to_upload"]["name"])). " has been uploaded. Please input extra detail about this file: <br> ";
-          } else {
-              echo "Sorry, there was an error uploading your file.";
-          }
-          $filename = $_FILES["file_to_upload"]["name"];
-      }
       echo "<img src= 'uploads/". $filename . "' alt='Uploaded file' height = 200 width = 200> <br>";
-       ?>
-
+    ?>
     <h5>Input file attributes</h5>
-    <form class="uploaddetails" action="confirm.php" method="post" id="attributesform">
+    <form class="uploaddetails" action="editend.php" method="post" id="attributesform">
       <input type="text" name='filename' value="<?php echo $filename ?>" readonly id="filename"> <br>
+      <input type="text" name='ind' value = "<?php echo $ind ?>" readonly><br>
       <label for="name">Name of The Work</label>
-      <input type="text" name="name" placeholder="Name" required><br>
+      <input type="text" name="name" placeholder="Name" value = "<?php echo $picture_name ?>" required><br>
       <label for="style">In style of</label>
       <input type="text" name="style" placeholder="Artist Name" required><br>
       <label for="database">Database Number</label>
-      <input type="text" name="database" placeholder="Database Number" required><br>
+      <input type="text" name="database" placeholder="Catalog Number" value = "<?php echo $catalog_number ?>" required><br>
       <label for="scene">Scene Number</label>
-      <input type="text" name="scene" placeholder="Scene Number" required><br>
+      <input type="text" name="scene" placeholder="Scene Number" value = "<?php echo $scene ?>" required><br>
       <small>If adding multiple scenes, please use a full stop followed by a space (i.e. scenes 3 ,6 and 8 would be "3. 6. 8.")</small><br>
       <small>For a single scene, just type the number (i.e. scene 53 would be "53")<br>
         <button type="submit" form="attributesform" value="Submit">Submit Data</button>
     </form>
     <div class = "cancelupload">
-      <button type="button" onclick="deleteImage()">Cancel Upload</button>
+      <button type="button" onclick="">Cancel Upload</button>
     </div>
   </div>
   <div class="footer2">
@@ -115,27 +85,10 @@ mysqli_close($conn);
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script>
-  function carouseltimer() {
+function carouseltimer() {
     $('#carouselbackdrop').carousel({
       interval: 2000
     })
-  }
-</script>
-<script>
-  function deleteImage() {
-    let confirmation = confirm("This will delete the image and may cause adverse effects to the database. Are you sure?")
-    if (confirmation === true){
-      $.ajax({
-        url: 'cancel.php',
-        data: {
-          'file': './uploads/<?php echo $filename ?>'
-        },
-        method: 'GET',
-      }) //ajax
-      window.location = "./index.php"
-    } else {
-      return
-    }
   }
 </script>
 

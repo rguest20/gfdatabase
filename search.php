@@ -33,10 +33,10 @@ if ($type == "databasenumber") {
 
 
 // Create connection and collect search data
-$servername = "127.0.0.1:3306";
-$username = "u697980380_genuinefakes";
-$password = "JohnMyatt1";
-$dbname = "u697980380_gfdatabase";
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "gfdatabase";
 $conn = new mysqli($servername, $username, $password, $dbname);
 $search = mysqli_query($conn, $sqlcount);
 
@@ -109,7 +109,7 @@ mysqli_close($conn);
 } ?>>Index</input><br>
       <button>Search For a Picture</button>
     </form>
-    <a href="index.php">Back to Home</a>
+    <strong><a href="index.php">Back to Home</a></strong>
   </div>
   <br>
   <div class="forms jumbotron">
@@ -129,6 +129,7 @@ mysqli_close($conn);
         echo '<p>Scene: '. $scenetrimmed .'</p>';
         echo '<p>Database number: '. $y["database_index"] .'</p>';
         echo "</div>";
+        echo "<button type ='button' onclick='ed(\"". $y['gf_index'] ."\")'>Edit</button> <button type='button' onclick = \"del(". $y['gf_index'] .")\"> Delete </button>";
         echo "</div>";
     }
     echo "<div class = 'pagination'>";
@@ -154,7 +155,7 @@ mysqli_close($conn);
     <p>Made by Ryan Guest 2020</p>
   </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script>
@@ -163,6 +164,22 @@ mysqli_close($conn);
       interval: 2000
     })
   }
+
+function del(index){
+  let form = '<form action="delete.php" method="post" id="editform">' +
+  '<input type="text" name="file" value="'+ index + '" />' +
+    '</form>'
+  $('body').append(form)
+  $('#editform').submit()
+}
+
+function ed(index) {
+  let form = '<form action="edit.php" method="post" id="editform">' +
+  '<input type="text" name="file" value="'+ index + '" />' +
+    '</form>'
+  $('body').append(form)
+  $('#editform').submit()
+}
 </script>
 
 </html>

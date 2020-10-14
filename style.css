@@ -94,6 +94,12 @@ a:hover {
   display: block;
 }
 
+.searchresult button {
+  position: relative;
+  top: 100px;
+  left: 140px;
+}
+
 .indexofsearch{
   float: right;
 }
