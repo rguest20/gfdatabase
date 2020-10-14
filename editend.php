@@ -5,11 +5,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $catalog_number = $_POST["database"];
     $scene = $_POST["scene"];
 
-    $sql = "UPDATE `genuine_fakes_pictues` SET (`database_index`, `picture_name`, `scene`)  = (". $database .", ". $name .", ". $scene .") WHERE `genuine_fakes_pictues`.`gf_index` = 2;";
+    $sql = "UPDATE `genuine_fakes_pictues` SET `database_index` = '". $catalog_number ."' , `picture_name` = '". $name ."' , `scene` = '". $scene ."' WHERE `genuine_fakes_pictues`.`gf_index` = ". $ind ."";
     $servername = "localhost";
     $username = "root";
     $password = "root";
     $dbname = "gfdatabase";
     $conn = new mysqli($servername, $username, $password, $dbname);
     mysqli_query($conn, $sql);
-?>
+    mysqli_close($conn);
+}
+  header("Location: search.php");
