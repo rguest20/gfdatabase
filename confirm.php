@@ -25,7 +25,7 @@ if (strpos($scene, '.') == false) {
     $scene = $scene . '.';
 }
 $highestindex += 1;
-$sql= "INSERT INTO `genuine_fakes_pictues` (`gf_index`, `picture_file_name`, `database_index`, `picture_name`, `scene`) VALUES ('". $highestindex ."', '" . $fileaddress . "', '" . $database . "', '" . $name . "', '". $scene ."')";
+$sql= "INSERT INTO `genuine_fakes_pictues` (`gf_index`, `picture_file_name`, `database_index`, `picture_name`, `Artist`, `scene`) VALUES ('". $highestindex ."', '" . $fileaddress . "', '" . $database . "', '" . $name . "', '". $style ."', '". $scene ."')";
 $upload = mysqli_query($conn, $sql);
 mysqli_close($conn);
 ?>

@@ -45,9 +45,9 @@ mysqli_close($conn);
         <input type=text class="query" name="value" autocomplete="off"> <br />
         <h5>Type of Search</h5>
           <input type = 'radio' name="querytype" value="name" checked>Name</input><br>
+          <input type = 'radio' name="querytype" value="style">Artist</input><br>
           <input type = 'radio' name="querytype" value="scene">Scene Number</input><br>
           <input type = 'radio' name="querytype" value="databasenumber">Database Number</input><br>
-          <input type = 'radio' name="querytype" value="gfdatabase">Index</input><br>
         <button>Search For a Picture</button>
       </form>
     </div>

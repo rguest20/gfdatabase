@@ -17,9 +17,9 @@ if ($type == "databasenumber") {
     $type = "database_index";
     $sqlcount = "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
     $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
-} elseif ($type == "gfdatabase") {
-    $type = "gf_index";
-    $sqlcount = "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
+} elseif ($type == "style") {
+    $type = "style";
+    $sqlcount = "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . "%'";
     $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
 } elseif ($type == "scene") {
     $type = "scene";
@@ -98,15 +98,15 @@ mysqli_close($conn);
       <input type='radio' name="querytype" value="name" <?php if ($type == "picture_name") {
     echo "checked";
 } ?>>Name</input><br>
+      <input type='radio' name="querytype" value="style" <?php if ($type == "style") {
+    echo "checked";
+} ?>>Artist</input><br>
       <input type='radio' name="querytype" value="scene" <?php if ($type == "scene") {
     echo "checked";
 } ?>>Scene Number</input><br>
       <input type='radio' name="querytype" value="databasenumber" <?php if ($type == "database_index") {
     echo "checked";
-} ?>>Database Number</input><br>
-      <input type='radio' name="querytype" value="gfdatabase" <?php if ($type == "gf_index") {
-    echo "checked";
-} ?>>Index</input><br>
+} ?>>Catalog Number</input><br>
       <button>Search For a Picture</button>
     </form>
     <strong><a href="index.php">Back to Home</a></strong>
@@ -124,6 +124,7 @@ mysqli_close($conn);
         echo '<img src = "./uploads/'. $y["picture_file_name"] . '" height = "200" width = "200" class="searchimage">';
         echo "<div class = 'pictureinformation'>";
         echo '<p>Name: '. $y["picture_name"].'</p>';
+        echo '<p>Artist: '. $y['Artist'].'<p>';
         $scene = str_replace(".", ",", $y['scene']);
         $scenetrimmed = rtrim($scene, ", ");
         echo '<p>Scene: '. $scenetrimmed .'</p>';
@@ -166,11 +167,13 @@ mysqli_close($conn);
   }
 
 function del(index){
-  let form = '<form action="delete.php" method="post" id="editform">' +
-  '<input type="text" name="file" value="'+ index + '" />' +
-    '</form>'
-  $('body').append(form)
-  $('#editform').submit()
+  if (confirm("Are you sure you want to delete?")) {
+    let form = '<form action="delete.php" method="post" id="editform">' +
+    '<input type="text" name="file" value="'+ index + '" />' +
+      '</form>'
+    $('body').append(form)
+    $('#editform').submit()
+  }
 }
 
 function ed(index) {

@@ -4,8 +4,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $catalog_number = $_POST["database"];
     $scene = $_POST["scene"];
+    $artist = $_POST["style"]
 
-    $sql = "UPDATE `genuine_fakes_pictues` SET `database_index` = '". $catalog_number ."' , `picture_name` = '". $name ."' , `scene` = '". $scene ."' WHERE `genuine_fakes_pictues`.`gf_index` = ". $ind ."";
+    $sql = "UPDATE `genuine_fakes_pictues` SET `database_index` = '". $catalog_number ."' , `picture_name` = '". $name ."' , `Artist` = '". $style ."' `scene` = '". $scene ."' WHERE `genuine_fakes_pictues`.`gf_index` = ". $ind ."";
     $servername = "localhost";
     $username = "root";
     $password = "root";

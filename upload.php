@@ -93,9 +93,9 @@ mysqli_close($conn);
       <input type="text" name='filename' value="<?php echo $filename ?>" readonly id="filename"> <br>
       <label for="name">Name of The Work</label>
       <input type="text" name="name" placeholder="Name" required><br>
-      <label for="style">In style of</label>
+      <label for="style">Artist</label>
       <input type="text" name="style" placeholder="Artist Name" required><br>
-      <label for="database">Database Number</label>
+      <label for="database">Catalog Number</label>
       <input type="text" name="database" placeholder="Database Number" required><br>
       <label for="scene">Scene Number</label>
       <input type="text" name="scene" placeholder="Scene Number" required><br>

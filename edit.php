@@ -16,6 +16,7 @@ $filename = $results[0]['picture_file_name'];
 $picture_name = $results[0]['picture_name'];
 $catalog_number = $results[0]['database_index'];
 $scene = $results[0]['scene'];
+$artist = $results[0]['Artist'];
 
 mysqli_close($conn);
 ?>
@@ -64,7 +65,7 @@ mysqli_close($conn);
       <label for="name">Name of The Work</label>
       <input type="text" name="name" placeholder="Name" value = "<?php echo $picture_name ?>" required><br>
       <label for="style">In style of</label>
-      <input type="text" name="style" placeholder="Artist Name" required><br>
+      <input type="text" name="style" placeholder="Artist Name" value = "<?php echo $artist ?>" required><br>
       <label for="database">Database Number</label>
       <input type="text" name="database" placeholder="Catalog Number" value = "<?php echo $catalog_number ?>" required><br>
       <label for="scene">Scene Number</label>
