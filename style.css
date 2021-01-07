@@ -58,9 +58,32 @@ a:hover {
   overflow: auto;
 }
 
+.align_left{
+  position: absolute;
+  left:0;
+  right:0;
+  height: 90vh;
+}
+
+.vcenter{
+  position: absolute;
+  left:0;
+  right:0;
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 80vh; /* These two lines are counted as one :-)       */
+  width:100%;
+  display: flex;
+  align-items: center;
+}
+
 .jumbotron{
   background-color: rgba(122, 122, 122, 0.2);
   padding-bottom: 2rem;
+  padding-top: 2rem;
+}
+
+.login_box{
+  margin: 0 auto;
 }
 
 .forms > h3{
@@ -92,12 +115,19 @@ a:hover {
 
 .searchresult{
   display: block;
+  position: relative;
 }
 
-.searchresult button {
-  position: relative;
-  top: 100px;
-  left: 140px;
+.searchresult .edit {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.searchresult .delete{
+  position: absolute;
+  top: 0;
+  left: 50px;
 }
 
 .indexofsearch{

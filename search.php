@@ -18,9 +18,9 @@ if ($type == "databasenumber") {
     $sqlcount = "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
     $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
 } elseif ($type == "style") {
-    $type = "style";
+    $type = "Artist";
     $sqlcount = "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . "%'";
-    $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` = '" . $value . "'";
+    $sql= "SELECT * FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . "%'";
 } elseif ($type == "scene") {
     $type = "scene";
     $sqlcount= "SELECT count(*) FROM `genuine_fakes_pictues` WHERE `" . $type . "` LIKE '%" . $value . ".%'";
@@ -130,7 +130,7 @@ mysqli_close($conn);
         echo '<p>Scene: '. $scenetrimmed .'</p>';
         echo '<p>Database number: '. $y["database_index"] .'</p>';
         echo "</div>";
-        echo "<button type ='button' onclick='ed(\"". $y['gf_index'] ."\")'>Edit</button> <button type='button' onclick = \"del(". $y['gf_index'] .")\"> Delete </button>";
+        echo "<button type ='button' class='edit' onclick='ed(\"". $y['gf_index'] ."\")'>Edit</button> <button type='button' class='delete' onclick = \"del(". $y['gf_index'] .")\"> Delete </button>";
         echo "</div>";
     }
     echo "<div class = 'pagination'>";

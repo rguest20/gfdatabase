@@ -1,11 +1,17 @@
 <?php
 // Create connection
+if (!isset($_SESSION)) { session_start();}
 $servername = "localhost";
 $username = "root";
 $password = "root";
 $dbname = "gfdatabase";
 $conn = new mysqli($servername, $username, $password, $dbname);
 mysqli_close($conn);
+
+if ($_SESSION['auth'] != "authorised"){
+  echo "hello";
+  header('Location: login.php');
+}
 
 ?>
 <!DOCTYPE html>
